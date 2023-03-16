@@ -38,7 +38,5 @@ public class AppTest
 
        Map<String, Object> map = JsonFlattener.flattenAsMap((responseBody));
        System.out.println(map);
-
-
    }
 }
