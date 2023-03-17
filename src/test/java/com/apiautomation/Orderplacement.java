@@ -2,8 +2,13 @@ package com.apiautomation;
 
 
 import com.github.wnameless.json.flattener.JsonFlattener;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import io.restassured.http.ContentType;
 import io.restassured.http.Method;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.json.simple.JSONArray;
@@ -22,18 +27,20 @@ import static io.restassured.RestAssured.given;
 public class Orderplacement
 {
     String resourceid=null;
+    String itemid=null;
 
     @Test
     public void placeorders() throws IOException, ParseException {
-        for(int i=0;i<=4;i++){
+        for(int i=0;i<=0;i++){
             createcart();
             getitems();
             additems();
             updatecart();
             confirmcart();
+            deleteorder();
         }
     }
-   @Test
+   @Test(priority = 1)
     public void createcart() {
        JSONObject request = new JSONObject();
        request.put("online_offline", "online");
@@ -55,8 +62,8 @@ public class Orderplacement
        System.out.println(resourceid);
    }
 
-   @Test
-   public void getitems() throws IOException, ParseException {
+   @Test(priority = 2)
+   public void getitems()  {
 
        // Specify the base URL to the RESTful web service
        baseURI="https://sit-api.t2scdn.com/items?api_token=0b44a18db4cc0896422fed6fa6871495";
@@ -70,19 +77,25 @@ public class Orderplacement
        // specify the method type (GET) and the parameters if any.
        Response response=httpRequest.request(Method.GET);
        String responseBody=response.getBody().asString();
-       System.out.println("Response is " +responseBody);
+       //System.out.println("Response is " +responseBody);
 
-       Map<String, Object> map = JsonFlattener.flattenAsMap((responseBody));
-       System.out.println(map);
+       //Map<String, Object> map = JsonFlattener.flattenAsMap((responseBody));
+       //System.out.println(map);
+       JsonElement jsonData = new JsonParser().parse(responseBody);
+       JsonArray dataArray = jsonData.getAsJsonObject().get("data").getAsJsonArray();
+       int id = (int) (Math.random() * dataArray.size());
+       JsonObject name = dataArray.get(id).getAsJsonObject();
+        itemid = name.get("id").getAsString();
+       System.out.println("item: "+itemid);
 
-       String itemid = map.get("data[0].id").toString();
-       System.out.println("the item id is :" +itemid);
+       //itemid = map.get("data[0].id").toString();
+       //System.out.println("the item id is :" +itemid);
 
    }
 
-   @Test
+   @Test(priority = 3)
    public void additems(){
-       baseURI="https://sit-api.t2scdn.com/consumer/cart/"+resourceid+"/item/37636492?app_name=FOODHUB";
+       baseURI="https://sit-api.t2scdn.com/consumer/cart/"+resourceid+"/item/"+itemid+"?app_name=FOODHUB";
        Object response=given().
                headers("Content-Type", "application/json").
                header("store", "8051235").
@@ -96,7 +109,7 @@ public class Orderplacement
 
    }
 
-      @Test
+      @Test(priority = 4)
        public void updatecart(){
        JSONObject request = new JSONObject();
        request.put("email", "roshiniautomation@gmail.com");
@@ -131,7 +144,7 @@ public class Orderplacement
        System.out.println(response);
 
    }
-   @Test
+   @Test(priority = 5)
    public void confirmcart(){
 
        JSONObject request = new JSONObject();
@@ -148,6 +161,20 @@ public class Orderplacement
                then().
                extract().response().asString();
        System.out.println(response);
+
+   }
+
+   @Test
+   public void deleteorder(){
+        baseURI="https://sit-api.t2scdn.com/orders/"+resourceid+"?api_token=0b44a18db4cc0896422fed6fa6871495";
+        Object response = given().
+                headers("Content-Type", "application/json").
+                when().
+                delete(baseURI).
+                then().
+                extract().response().asString();
+                System.out.println(response);
+
 
    }
 
