@@ -65,7 +65,7 @@ public class Orderplacement
    @Test(priority = 2)
    public void getitems()  {
 
-       // Specify the base URL to the RESTful web service
+        // Specify the base URL to the RESTful web service
        baseURI="https://sit-api.t2scdn.com/items?api_token=0b44a18db4cc0896422fed6fa6871495";
 
        // Get the RequestSpecification of the request to be sent to the server.
