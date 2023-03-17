@@ -2,12 +2,13 @@ package com.apiautomation;
 
 
 import com.github.wnameless.json.flattener.JsonFlattener;
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.testng.annotations.Test;
 
@@ -21,6 +22,7 @@ import static io.restassured.RestAssured.given;
 public class Orderplacement
 {
     String resourceid=null;
+
     @Test
     public void placeorders() throws IOException, ParseException {
         for(int i=0;i<=4;i++){
@@ -57,7 +59,7 @@ public class Orderplacement
    public void getitems() throws IOException, ParseException {
 
        // Specify the base URL to the RESTful web service
-       RestAssured.baseURI="https://sit-api.t2scdn.com/items?api_token=0b44a18db4cc0896422fed6fa6871495";
+       baseURI="https://sit-api.t2scdn.com/items?api_token=0b44a18db4cc0896422fed6fa6871495";
 
        // Get the RequestSpecification of the request to be sent to the server.
        RequestSpecification httpRequest= given();
@@ -72,6 +74,10 @@ public class Orderplacement
 
        Map<String, Object> map = JsonFlattener.flattenAsMap((responseBody));
        System.out.println(map);
+
+       String itemid = map.get("data[0].id").toString();
+       System.out.println("the item id is :" +itemid);
+
    }
 
    @Test
