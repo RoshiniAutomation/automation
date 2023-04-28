@@ -33,11 +33,11 @@ public class Orderplacement {
     @Test(priority = 1)
     public void placeorders() throws IOException, ParseException {
         for (int i = 1; i <= 1; i++) {
-            Map<String,Object> nameList = new HashMap<>();
-            nameList.put("name","Karthick");
-            String name = nameList.get("name").toString();
-            System.out.println(name);
-            nameList.clear();
+//            Map<String,Object> nameList = new HashMap<>();
+//            nameList.put("name","Karthick");
+//            String name = nameList.get("name").toString();
+//            System.out.println(name);
+//            nameList.clear();
             createcart();
             getitems();
             additems();
