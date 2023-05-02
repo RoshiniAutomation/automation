@@ -3,11 +3,15 @@
 <suite name="All Test Suite">
     <test  name="automation">
         <classes>
-            <class name="com.apiautomation.Orderplacement">
-                <methods>
+            <!--<class name="com.apiautomation.Orderplacement">
+            </class>-->
+
+            <class name="com.apiautomation.Digitalboard">
+                <!--<methods>
                     <include name="placeorders"/>
-                </methods>
+                </methods>-->
             </class>
+
         </classes>
     </test>
 </suite>

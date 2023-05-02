@@ -1,0 +1,23 @@
+{
+  "api": {
+    "url": "https://sit-api.fhcdn.dev",
+    "version": "v2022_05_05",
+    "envType": "SIT",
+    "appSycURI": "https://zmpjapgiejgj3hokmnmv3bcrl4.appsync-api.us-east-1.amazonaws.com",
+    "appSycAuth": "da2-gqy2zguabrgxlbiww5ezfi4r5u"
+  },
+  "roshinifoodhubtest": {
+    "locale": "united kingdom",
+    "region": "1",
+    "store": "8051235",
+    "host": "sit-webrosh.t2scdn.com",
+    "token": "0b44a18db4cc0896422fed6fa6871495",
+    "country": "UK",
+    "currency": "£",
+    "timezone": "GMT+1",
+    "phoneNumber": "07380308571",
+    "emailId": "testing@gmail.com",
+    "accessToken": ""
+  }
+}
+

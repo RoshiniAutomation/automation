@@ -167,10 +167,7 @@ public class Orderplacement {
                 contentType(ContentType.JSON).
                 accept(ContentType.JSON).
                 body(request.toJSONString()).
-                when().
-                put(baseURI).
-                then().
-                extract().response().asString();
+                when().put(baseURI).then().extract().response().asString();
         System.out.println(response);
         System.out.println("cart updated successfully");
 
