@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import org.testng.Assert;
 import static io.restassured.RestAssured.*;
 public class Digitalboard {
     Object response = null;
@@ -39,6 +40,7 @@ public class Digitalboard {
         System.out.println("number" + var5);
         return var5;
     }
+
 
     @Test(priority = 0)
     public void addtvlegacy() {
@@ -73,7 +75,7 @@ public class Digitalboard {
                 hardFail("Failed to add TV" + e);
             }
         }
-    @Test(priority = 1)
+  @Test(priority = 1)
         public void gettvtoken(){
         try {
             fparams.put("serial_number", serialNumber);
@@ -95,8 +97,10 @@ public class Digitalboard {
         try {
             qparams.put("api_token", tvtoken);
             baseURI = siturl + "/client/television/board";
-            response = given().queryParams(qparams).when().get(baseURI).then().extract().response().asPrettyString();
+            response = given().queryParams(qparams).when().get(baseURI).then().statusCode(200).extract().response().asPrettyString();
             System.out.println("before is " + response);
+            /*int statusCode = response.getStatusCode();
+            response.statusCode() ;*/
             Map<String, Object> map = JsonFlattener.flattenAsMap((response).toString());
             for (Map.Entry<String,Object> rest: map.entrySet()){
                 System.out.println("Key : "+rest.getKey() +"  "+"Value : "+rest.getValue());
@@ -110,3 +114,4 @@ public class Digitalboard {
             System.out.println(s);
     }
 }
+
